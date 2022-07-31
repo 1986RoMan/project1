@@ -31,9 +31,9 @@ const MoviesList = () => {
 
     const submit = async (opo) => {
          //let filterMovies=''
-         filterMovies= movies.filter((value)=>value.genre_ids.includes(+opo.genres))
+         let filterMovies= movies.filter((value)=>value.genre_ids.includes(+opo.genres))
         await dispatch(movieAction.filterMov(filterMovies))
-         //filterMovies=movies
+
     }
         // for (const movi of movies) {
         //     const genreids=movi.genre_ids
