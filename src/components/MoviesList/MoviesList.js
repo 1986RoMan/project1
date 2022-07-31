@@ -30,7 +30,7 @@ const MoviesList = () => {
     const {register,handleSubmit} = useForm();
 
     const submit = async (opo) => {
-         let filterMovies=''
+         //let filterMovies=''
          filterMovies= movies.filter((value)=>value.genre_ids.includes(+opo.genres))
         await dispatch(movieAction.filterMov(filterMovies))
          //filterMovies=movies
