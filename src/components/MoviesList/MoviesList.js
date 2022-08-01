@@ -7,16 +7,16 @@ import {useForm} from "react-hook-form";
 
 const MoviesList = () => {
    const {movies,prev,next,genres}=useSelector(state => state.movieReducer);
+    console.log(genres)
     const dispatch = useDispatch();
-    const {query,setQuery} = useSearchParams({page:'1'});
-    console.log(query)
+    const [query, setQuery] = useSearchParams({page: '1'});
          useEffect(()=>{
              dispatch(movieAction.genre())
          },[])
     useEffect(()=>{
-       dispatch(movieAction.allMovie({page:('page')}))
+       dispatch(movieAction.allMovie({page:query.get('page')}))
     },[query])
-
+    console.log(query.get('page'))
     const prevPage = () => {
         const page = +query.get('page')-1;
         setQuery({page:`${page}`})
@@ -26,38 +26,27 @@ const MoviesList = () => {
         const page = +query.get('page')+1;
         setQuery({page:`${page}`})
     };
-
-    const {register,handleSubmit} = useForm();
+    const {register,handleSubmit,reset} = useForm();
 
     const submit = async (opo) => {
-         //let filterMovies=''
-         let filterMovies= movies.filter((value)=>value.genre_ids.includes(+opo.genres))
-        await dispatch(movieAction.filterMov(filterMovies))
+        let filterMovies = movies.filter((value) => value.genre_ids.includes(+opo.genres))
 
+        await dispatch(movieAction.filterMov(filterMovies))
     }
-        // for (const movi of movies) {
-        //     const genreids=movi.genre_ids
-        //     console.log(genreids)
-        //     for (const genreid of genreids) {
-        //         console.log(opo.genres)
-        //         if(opo.genres!==genreid){
-        //             console.log('rrrrrr')
-        //
-        //         }
-        //     }
-        // }
 
 return (
-        <div>
+        <div >
+            <button disabled={!prev} onClick={prevPage}>Prev</button>
+            <button  onClick={nextPage}>Next</button>
             <form onSubmit={handleSubmit(submit)}>
-                Жанри:<select {...register('genres')} >
+                Жанри:<select  {...register('genres')} >
                 {genres.map(value=><option key={value.id} value={value.id}>{value.name}</option>)}
                </select>
                 <button>send</button>
             </form>
-            <button disabled={!prev} onClick={prevPage}>Prev</button>
-            <button disabled={!next} onClick={nextPage}>Next</button>
+            <div style={{display:"flex",flexWrap:"wrap"}} >
             {movies.map(movi=><MovieListCard key={movi.id} movi={movi}/>)}
+        </div>
         </div>
     );
 };

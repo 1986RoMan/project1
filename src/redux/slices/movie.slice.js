@@ -12,8 +12,8 @@ const initialState={
 const allMovie=createAsyncThunk(
     'movieSlice/allMovie',
     async ({page})=>{
-      const {data}= await movieService.getAll(page)
-        return data
+      const {data:{results}}= await movieService.getAll(page)
+        return results
     }
 )
 const genre = createAsyncThunk(
@@ -29,14 +29,16 @@ const movieSlice=createSlice({
     reducers:{
         filterMov:(state, action)=>{
             state.movies=action.payload
+            console.log(JSON.stringify(state.movies))
         }
     },
     extraReducers:(builder)=>
         builder
             .addCase(allMovie.fulfilled,(state, action)=>{
-                state.movies=action.payload.results
+                state.movies=action.payload
                 state.prev=action.payload.prev
                 state.next=action.payload.next
+                console.log(JSON.stringify(state.next))
                  console.log(JSON.stringify(action.payload))
             })
             .addCase(genre.fulfilled,(state, action)=>{
