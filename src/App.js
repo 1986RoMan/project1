@@ -1,5 +1,6 @@
 import './App.css';
 import {Navigate, Route, Routes} from "react-router-dom";
+
 import {MoviePage, MoviesPage} from "./pages";
 import {MainLayout} from "./layout";
 

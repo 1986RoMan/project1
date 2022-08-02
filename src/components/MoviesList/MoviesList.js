@@ -1,17 +1,21 @@
 import React, {useEffect} from 'react';
-import {MovieListCard} from "../MoviesListCard/MovieListCard";
 import {useDispatch, useSelector} from "react-redux";
-import {movieAction} from "../../redux";
 import {useSearchParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
+import css from './MovieList.module.css'
+import {movieAction} from "../../redux";
+import {MovieListCard} from "../MoviesListCard/MovieListCard";
 
 const MoviesList = () => {
-   const {movies,prev,next,genres, moviesFilter}=useSelector(state => state.movieReducer);
+
+    const {movies,prev,next,genres, moviesFilter}=useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
+
     const [query, setQuery] = useSearchParams({page: '1'});
          useEffect(()=>{
              dispatch(movieAction.genre())
          },[])
+
     useEffect(()=>{
        dispatch(movieAction.allMovie({page:query.get('page')}))
     },[query])
@@ -33,13 +37,7 @@ const MoviesList = () => {
         let filterMovies = movies.filter((value) => value.genre_ids.includes(+opo.genre))
         await dispatch(movieAction.filterMov(filterMovies))
     }
-    // const filtered = async (valuee) => {
-    //     console.log(valuee)
-    //          let filterMovies = movies.filter((value) => value.genre_ids.includes(valuee))
-    //     console.log(filterMovies)
-    //    await dispatch(movieAction.filterMov(filterMovies))
-    //      };
-    console.log(moviesFilter, 'here')
+
     return (
         <div >
             <button disabled={!prev} onClick={prevPage}>Prev</button>
@@ -47,11 +45,12 @@ const MoviesList = () => {
             <form onSubmit={handleSubmit(submit)}>
                 Жанри:<select  {...register('genre')} >
                 {genres.map(value=><option key={value.id} value={value.id}>{value.name}</option>)}
+                <option onClick={() => dispatch(movieAction.filterMov(null))}>Всі жанри</option>
                </select>
-                <button >send</button>
+                <button >Вибрати Жанр</button>
             </form>
-            <button onClick={() => dispatch(movieAction.filterMov(null))}>all</button>
-            <div style={{display:"flex",flexWrap:"wrap"}} >
+            <button onClick={() => dispatch(movieAction.filterMov(null))}>Всі Жанр</button>
+            <div className={css.moviesModule} >
                 {
                     (moviesFilter)
                     ?
