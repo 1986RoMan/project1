@@ -3,17 +3,17 @@ import css from './MoviesListCard.module.css'
 import {Link} from "react-router-dom";
 import StarRatings from "react-star-ratings/build/star-ratings";
 
-const MovieListCard = ({movi}) => {
-    const {id} =movi
+const MovieListCard = ({movie}) => {
+    const {id,backdrop_path,title,vote_average} =movie
     return (
         <div className={css.card}>
-            <Link to={`${id}`} state={movi}>
-                <div><img src={`https://image.tmdb.org/t/p/w300/${movi.backdrop_path}`}/></div>
-                <div>{movi.title}</div>
+            <Link to={id.toString()} state={movie}>
+                <div><img src={`https://image.tmdb.org/t/p/w300/${backdrop_path}`}/></div>
+                <div>{title}</div>
                 <StarRatings
                     numberOfStars={10}
                     starRatedColor="gold"
-                    rating={movi.vote_average}
+                    rating={vote_average}
                     starDimension="15px"
                     starSpacing="8px"
                 />

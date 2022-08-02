@@ -8,7 +8,7 @@ import {MovieListCard} from "../MoviesListCard/MovieListCard";
 
 const MoviesList = () => {
 
-    const {movies,prev,next,genres, moviesFilter}=useSelector(state => state.movieReducer);
+    const {movies,prev,next,genres, moviesFilter,errors}=useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
 
     const [query, setQuery] = useSearchParams({page: '1'});
@@ -40,23 +40,24 @@ const MoviesList = () => {
 
     return (
         <div >
-            <button disabled={!prev} onClick={prevPage}>Prev</button>
+            <button  onClick={prevPage}>Prev</button>
             <button  onClick={nextPage}>Next</button>
             <form onSubmit={handleSubmit(submit)}>
                 Жанри:<select  {...register('genre')} >
                 {genres.map(value=><option key={value.id} value={value.id}>{value.name}</option>)}
-                <option onClick={() => dispatch(movieAction.filterMov(null))}>Всі жанри</option>
                </select>
                 <button >Вибрати Жанр</button>
             </form>
-            <button onClick={() => dispatch(movieAction.filterMov(null))}>Всі Жанр</button>
+            <button onClick={() => dispatch(movieAction.filterMov(null))}>Всі Жанр
+            </button>
+            {errors &&<h1>{JSON.stringify(errors)}</h1>}
             <div className={css.moviesModule} >
                 {
                     (moviesFilter)
                     ?
-                    moviesFilter.map(movi => <MovieListCard key={movi.id} movi={movi}/>)
+                    moviesFilter.map(movie => <MovieListCard key={movie.id} movie={movie}/>)
                     :
-                    movies.map(movi=> <MovieListCard key={ movi.id } movi={movi}/>)
+                    movies.map(movie=> <MovieListCard key={ movie.id } movie={movie}/>)
                 }
         </div>
         </div>

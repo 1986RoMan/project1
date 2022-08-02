@@ -21,9 +21,9 @@ const MovieInfo = () => {
 
                 <div className={css.conteiner2}>
                     <div><b>Назва</b>: {state.title}</div>
-                    <div><b>Жанри</b>: {genres.map(value => <div>{state.genre_ids.includes(value.id)
+                    <div><b>Жанри</b>: {genres.map(value => <div key={value.id}> {state.genre_ids.includes(value.id)
                         ?
-                        <div>{`${value.name + ", "}`}</div> : ''}</div>)}
+                        <div>{`${value.name + ", "}`}</div> : ''} </div>)}
                     </div>
                     <div><b>Оригінальна мова</b>: {state.original_language}</div>
                     <div><b>Оригінальна назва</b>: {state.original_title}</div>
