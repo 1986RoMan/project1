@@ -5,9 +5,10 @@ import {genreService} from "../../services/genre.service";
 
 const initialState={
     movies:[],
+    moviesFilter:null,
     prev:null,
     next:null,
-    genres:[]
+    genres:[],
 }
 const allMovie=createAsyncThunk(
     'movieSlice/allMovie',
@@ -28,8 +29,8 @@ const movieSlice=createSlice({
     initialState,
     reducers:{
         filterMov:(state, action)=>{
-            state.movies=action.payload
-            console.log(JSON.stringify(state.movies))
+            state.moviesFilter=action.payload
+            console.log(state.moviesFilter)
         }
     },
     extraReducers:(builder)=>
@@ -38,8 +39,7 @@ const movieSlice=createSlice({
                 state.movies=action.payload
                 state.prev=action.payload.prev
                 state.next=action.payload.next
-                console.log(JSON.stringify(state.next))
-                 console.log(JSON.stringify(action.payload))
+                // console.log(JSON.stringify(action.payload))
             })
             .addCase(genre.fulfilled,(state, action)=>{
           state.genres=action.payload[0].genres

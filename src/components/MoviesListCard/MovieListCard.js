@@ -3,10 +3,10 @@ import css from './MoviesListCard.module.css'
 import {Link} from "react-router-dom";
 import StarRatings from "react-star-ratings/build/star-ratings";
 const MovieListCard = ({movi}) => {
-
+    const {id} =movi
     return (
         <div>
-            <Link to={'/movie'} state={movi}>
+            <Link to={`${id}`} state={movi}>
                 <div><img src={`https://image.tmdb.org/t/p/w500/${movi.backdrop_path}`}/></div>
                 <div>{movi.title}</div>
                 <StarRatings

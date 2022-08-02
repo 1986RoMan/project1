@@ -6,8 +6,7 @@ import {useSearchParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 
 const MoviesList = () => {
-   const {movies,prev,next,genres}=useSelector(state => state.movieReducer);
-    console.log(genres)
+   const {movies,prev,next,genres, moviesFilter}=useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
     const [query, setQuery] = useSearchParams({page: '1'});
          useEffect(()=>{
@@ -16,7 +15,8 @@ const MoviesList = () => {
     useEffect(()=>{
        dispatch(movieAction.allMovie({page:query.get('page')}))
     },[query])
-    console.log(query.get('page'))
+
+
     const prevPage = () => {
         const page = +query.get('page')-1;
         setQuery({page:`${page}`})
@@ -29,23 +29,36 @@ const MoviesList = () => {
     const {register,handleSubmit,reset} = useForm();
 
     const submit = async (opo) => {
-        let filterMovies = movies.filter((value) => value.genre_ids.includes(+opo.genres))
-
+        console.log(opo.genre)
+        let filterMovies = movies.filter((value) => value.genre_ids.includes(+opo.genre))
         await dispatch(movieAction.filterMov(filterMovies))
     }
-
-return (
+    // const filtered = async (valuee) => {
+    //     console.log(valuee)
+    //          let filterMovies = movies.filter((value) => value.genre_ids.includes(valuee))
+    //     console.log(filterMovies)
+    //    await dispatch(movieAction.filterMov(filterMovies))
+    //      };
+    console.log(moviesFilter, 'here')
+    return (
         <div >
             <button disabled={!prev} onClick={prevPage}>Prev</button>
             <button  onClick={nextPage}>Next</button>
             <form onSubmit={handleSubmit(submit)}>
-                Жанри:<select  {...register('genres')} >
+                Жанри:<select  {...register('genre')} >
                 {genres.map(value=><option key={value.id} value={value.id}>{value.name}</option>)}
                </select>
-                <button>send</button>
+                <button >send</button>
             </form>
+            <button onClick={() => dispatch(movieAction.filterMov(null))}>all</button>
             <div style={{display:"flex",flexWrap:"wrap"}} >
-            {movies.map(movi=><MovieListCard key={movi.id} movi={movi}/>)}
+                {
+                    (moviesFilter)
+                    ?
+                    moviesFilter.map(movi => <MovieListCard key={movi.id} movi={movi}/>)
+                    :
+                    movies.map(movi=> <MovieListCard key={ movi.id } movi={movi}/>)
+                }
         </div>
         </div>
     );

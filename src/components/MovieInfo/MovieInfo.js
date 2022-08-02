@@ -18,8 +18,8 @@ const {genres} = useSelector(state =>state.movieReducer);
 
                 <div className={css.conteiner2}>
                     <div>Назва: {state.title}</div>
-                    <div className={css.conteiner}>Жанри: {genres.map(value => <div>{state.genre_ids.includes(value.id) ?
-                        <div> {value.name+' '}</div> : ''}</div>)}
+                    <div>Жанри: {genres.map(value => <div>{state.genre_ids.includes(value.id) ?
+                        <div>{`${value.name + ", "}`}</div> : ''}</div>)}
                     </div>
                     <div>Оригінальна мова: {state.original_language}</div>
                     <div>Оригінальна назва: {state.original_title}</div>
