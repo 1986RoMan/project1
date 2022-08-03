@@ -1,8 +1,8 @@
 import React from 'react';
-import {useLocation, useParams,useNavigate} from "react-router-dom";
+import {useLocation,useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-
 import css from './MovieInfo.module.css'
+import {Badge, Button} from "reactstrap";
 
 const MovieInfo = () => {
 
@@ -10,26 +10,29 @@ const MovieInfo = () => {
     console.log(genres)
     const navigate = useNavigate();
     const {state} = useLocation();
-
+    console.log(JSON.stringify(state.with_people));
     return (
         <div>
             <div>
-                <button onClick={() => navigate('/movies')}>На головну сторінку</button>
+                <Button color="primary" onClick={() => navigate('/movies')}>На головну сторінку</Button>{' '}
             </div>
-            <div className={css.conteiner}>
-                <img className={css.kartunka} src={`https://image.tmdb.org/t/p/original/${state.backdrop_path}`}/>
+            <h1 className={css.container2}><Badge color="secondary">"Інформація про фільм"</Badge></h1>
 
-                <div className={css.conteiner2}>
-                    <div><b>Назва</b>: {state.title}</div>
-                    <div><b>Жанри</b>: {genres.map(value => <div key={value.id}> {state.genre_ids.includes(value.id)
+            <div className={css.container}>
+                <img className={css.carta} src={`https://image.tmdb.org/t/p/original/${state.backdrop_path}`}/>
+
+                <div className={css.container2}>
+                    <div><b>Назва:</b> {state.title}</div>
+                    <div><b>Жанри:</b> {genres.map(value => <div key={value.id}> {state.genre_ids.includes(value.id)
                         ?
                         <div>{`${value.name + ", "}`}</div> : ''} </div>)}
                     </div>
-                    <div><b>Оригінальна мова</b>: {state.original_language}</div>
-                    <div><b>Оригінальна назва</b>: {state.original_title}</div>
-                    <div><b>Коротко про фільм</b>: {state.overview}</div>
-                    <div><b>Популярність</b>: {state.popularity}</div>
-                    <div><b>Дата релізу</b>: {state.release_date}</div>
+                    <div><b>Оригінальна мова:</b> {state.original_language}</div>
+                    <div><b>Оригінальна назва:</b> {state.original_title}</div>
+                    <div><b>Коротко про фільм:</b> {state.overview}</div>
+                    <div><b>Популярність:</b> {state.popularity}</div>
+                    <div><b>Дата релізу:</b> {state.release_date}</div>
+                    <div><b>Сподобалось людям:</b> {state.vote_count}</div>
                 </div>
         </div>
             </div>

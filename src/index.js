@@ -1,22 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {setupStore} from "./redux";
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './index.scss'
 
 const store= setupStore()
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <Provider store={store}>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
-    </Provider>
 
+const rootElement = document.getElementById('root')
+if (!rootElement) throw new Error('Failed to find the root element')
+const root = ReactDOM.createRoot(rootElement)
+
+root.render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </BrowserRouter>
 
 );
 

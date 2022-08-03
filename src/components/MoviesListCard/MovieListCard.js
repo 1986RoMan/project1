@@ -1,7 +1,7 @@
 import React from 'react';
-import css from './MoviesListCard.module.css'
 import {Link} from "react-router-dom";
 import StarRatings from "react-star-ratings/build/star-ratings";
+import css from './MoviesListCard.module.css'
 
 const MovieListCard = ({movie}) => {
     const {id,backdrop_path,title,vote_average} =movie

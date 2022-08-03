@@ -3,12 +3,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import css from './MovieList.module.css'
+import {} from "bootstrap";
+
 import {movieAction} from "../../redux";
 import {MovieListCard} from "../MoviesListCard/MovieListCard";
+import {Button} from "reactstrap";
 
 const MoviesList = () => {
 
-    const {movies,prev,next,genres, moviesFilter,errors}=useSelector(state => state.movieReducer);
+    const {movies,genres, moviesFilter,errors}=useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
 
     const [query, setQuery] = useSearchParams({page: '1'});
@@ -40,16 +43,16 @@ const MoviesList = () => {
 
     return (
         <div >
-            <button  onClick={prevPage}>Prev</button>
-            <button  onClick={nextPage}>Next</button>
+            <Button color="secondary" onClick={prevPage}>Попередня сторінка</Button>{' '}
+            <Button color="secondary"onClick={nextPage}>Наступна сторінка</Button>{' '}
             <form onSubmit={handleSubmit(submit)}>
                 Жанри:<select  {...register('genre')} >
                 {genres.map(value=><option key={value.id} value={value.id}>{value.name}</option>)}
                </select>
-                <button >Вибрати Жанр</button>
+                <Button color="secondary">Вибрати Жанр</Button>{' '}
             </form>
-            <button onClick={() => dispatch(movieAction.filterMov(null))}>Всі Жанр
-            </button>
+            <Button color="secondary" onClick={() => dispatch(movieAction.filterMov(null))}>Всі Жанр
+            </Button>{' '}
             {errors &&<h1>{JSON.stringify(errors)}</h1>}
             <div className={css.moviesModule} >
                 {

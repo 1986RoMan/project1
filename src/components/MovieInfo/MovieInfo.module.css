@@ -1,12 +1,12 @@
-.kartunka{
+.carta{
     width: 800px;
     height: 500px;
 }
-.conteiner{
+.container{
     display: flex;
     flexWrap:wrap
 }
-.conteiner2{
+.container2{
     display: flex;
     flexWrap:wrap;
     flex-direction: column;
