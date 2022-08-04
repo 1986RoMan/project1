@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import StarRatings from "react-star-ratings/build/star-ratings";
+
 import css from './MoviesListCard.module.css'
 
 const MovieListCard = ({movie}) => {

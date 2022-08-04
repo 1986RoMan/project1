@@ -2,16 +2,15 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useSearchParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import css from './MovieList.module.css'
-import {} from "bootstrap";
+import {Button} from "reactstrap";
 
+import css from './MovieList.module.css'
 import {movieAction} from "../../redux";
 import {MovieListCard} from "../MoviesListCard/MovieListCard";
-import {Button} from "reactstrap";
 
 const MoviesList = () => {
 
-    const {movies,genres, moviesFilter,errors}=useSelector(state => state.movieReducer);
+    const {movies,genres, moviesFilter,errors,prev}=useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
 
     const [query, setQuery] = useSearchParams({page: '1'});
@@ -33,18 +32,20 @@ const MoviesList = () => {
         const page = +query.get('page')+1;
         setQuery({page:`${page}`})
     };
+    console.log(query.get('page'))
     const {register,handleSubmit,reset} = useForm();
 
     const submit = async (opo) => {
         console.log(opo.genre)
         let filterMovies = movies.filter((value) => value.genre_ids.includes(+opo.genre))
         await dispatch(movieAction.filterMov(filterMovies))
+        reset()
     }
 
     return (
         <div >
-            <Button color="secondary" onClick={prevPage}>Попередня сторінка</Button>{' '}
-            <Button color="secondary"onClick={nextPage}>Наступна сторінка</Button>{' '}
+            <Button disabled={ errors} color="secondary" onClick={prevPage}>Попередня сторінка</Button>{' '}
+            <Button disabled={moviesFilter} color="secondary" onClick={nextPage}>Наступна сторінка</Button>{' '}
             <form onSubmit={handleSubmit(submit)}>
                 Жанри:<select  {...register('genre')} >
                 {genres.map(value=><option key={value.id} value={value.id}>{value.name}</option>)}

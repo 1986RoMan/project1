@@ -1,8 +1,9 @@
 import React from 'react';
 import {useLocation,useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
-import css from './MovieInfo.module.css'
 import {Badge, Button} from "reactstrap";
+
+import css from './MovieInfo.module.css'
 
 const MovieInfo = () => {
 
