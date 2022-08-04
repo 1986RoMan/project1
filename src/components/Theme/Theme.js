@@ -4,7 +4,7 @@ import cn from 'classnames'
 
 
 import styles from './index.module.scss'
-import {themeAction, themeReducer} from "../../redux";
+import {themeAction} from "../../redux";
 
 const Theme = ({ className }) => {
     let theme = useSelector((state) => state.themeReducer)

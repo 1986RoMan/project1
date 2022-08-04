@@ -9,8 +9,11 @@ const MovieListCard = ({movie}) => {
     return (
         <div className={css.card}>
             <Link to={id.toString()} state={movie}>
-                <div><img src={`https://image.tmdb.org/t/p/w300/${backdrop_path}`}/></div>
-                <div>{title}</div>
+                <div><img src={`https://image.tmdb.org/t/p/w300/${backdrop_path}`} alt={title}/>
+                </div>
+                <div>
+                    {title}
+                </div>
                 <StarRatings
                     numberOfStars={10}
                     starRatedColor="gold"

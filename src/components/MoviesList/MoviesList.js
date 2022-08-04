@@ -10,7 +10,7 @@ import {MovieListCard} from "../MoviesListCard/MovieListCard";
 
 const MoviesList = () => {
 
-    const {movies,genres, moviesFilter,errors,prev}=useSelector(state => state.movieReducer);
+    const {movies,genres, moviesFilter,errors}=useSelector(state => state.movieReducer);
     const dispatch = useDispatch();
 
     const [query, setQuery] = useSearchParams({page: '1'});
@@ -32,11 +32,10 @@ const MoviesList = () => {
         const page = +query.get('page')+1;
         setQuery({page:`${page}`})
     };
-    console.log(query.get('page'))
+
     const {register,handleSubmit,reset} = useForm();
 
     const submit = async (opo) => {
-        console.log(opo.genre)
         let filterMovies = movies.filter((value) => value.genre_ids.includes(+opo.genre))
         await dispatch(movieAction.filterMov(filterMovies))
         reset()

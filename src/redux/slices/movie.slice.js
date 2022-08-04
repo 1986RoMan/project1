@@ -1,14 +1,13 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-import {movieService} from "../../services";
-import {genreService} from "../../services/genre.service";
+import {genreService, movieService} from "../../services";
+
 
 const initialState={
     movies:[],
     moviesFilter:null,
     genres:[],
-    errors:null,
-    prev:null
+    errors:null
 }
 
 const allMovie=createAsyncThunk(
@@ -43,7 +42,6 @@ const movieSlice=createSlice({
         builder
             .addCase(allMovie.fulfilled,(state, action)=>{
                 state.movies=action.payload.results
-                state.prev=action.payload.page
             })
             .addCase(genre.fulfilled,(state, action)=>{
           state.genres=action.payload[0].genres

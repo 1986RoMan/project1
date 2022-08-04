@@ -6,3 +6,13 @@
     color: snow;
     background: black;
 }
+.avatar{
+    width: 45px;
+    height: 40px;
+    border-radius: 50%;
+}
+.divka{
+    display:flex;
+    flexWrap:wrap;
+    margin:15px
+}
