@@ -7,7 +7,8 @@ const initialState={
     movies:[],
     moviesFilter:null,
     genres:[],
-    errors:null
+    errors:null,
+    searchMovies:[]
 }
 
 const allMovie=createAsyncThunk(
@@ -29,22 +30,52 @@ const genre = createAsyncThunk(
         return [data]
     }
 );
+const sortMove = createAsyncThunk(
+    'sortMove',
+    async ({searcho,page})=>{
+        console.log(JSON.stringify(searcho.search))
+        console.log(JSON.stringify(page))
+       const {data:{results}}= await movieService.sortMovie(searcho.search,page)
+        return results
+
+    }
+);
+const filMove = createAsyncThunk(
+    'filMove',
+    async ({page,genre})=>{
+        const {data:{results}}= await movieService.getAllGanre(page,genre.genre)
+        return results
+        console.log(JSON.stringify(results))
+
+    }
+);
 
 const movieSlice=createSlice({
     name:'movieSlice',
     initialState,
     reducers:{
-        filterMov:(state, action)=>{
-            state.moviesFilter=action.payload
+
+        sortMov:(state, action)=>{
+            state.movies=action.payload
+           // console.log(JSON.stringify(state.movies))
         }
     },
     extraReducers:(builder)=>
         builder
             .addCase(allMovie.fulfilled,(state, action)=>{
                 state.movies=action.payload.results
+                //console.log(JSON.stringify(state.movies))
             })
             .addCase(genre.fulfilled,(state, action)=>{
           state.genres=action.payload[0].genres
+            })
+            .addCase(sortMove.fulfilled,(state, action)=>{
+                state.searchMovies=action.payload
+                //console.log(JSON.stringify(state.searchMovies))
+            })
+            .addCase(filMove.fulfilled,(state, action)=>{
+                state.moviesFilter=action.payload
+                console.log(JSON.stringify(state.moviesFilter))
             })
             .addDefaultCase((state, action)=>{
                 const [type] = action.type.split('/').splice(-1);
@@ -55,11 +86,13 @@ const movieSlice=createSlice({
             })
 })
 
-const {reducer:movieReducer,actions:{filterMov}} = movieSlice;
+const {reducer:movieReducer,actions:{sortMov}} = movieSlice;
 const movieAction={
     allMovie,
     genre,
-    filterMov
+    sortMov,
+    sortMove,
+    filMove
 }
 
 

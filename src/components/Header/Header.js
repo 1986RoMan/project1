@@ -10,7 +10,7 @@ const Header = () => {
             </div>
                 <div className={css.divka}>
                     <p style={{margin:"10px"}}>login:M@xXx</p>
-                    <img className={css.avatar} src={'https://vjoy.cc/wp-content/uploads/2019/05/35-42.jpg'}/>
+                    <img className={css.avatar} src={'https://vjoy.cc/wp-content/uploads/2019/05/35-42.jpg'} alt={"аватарка"}/>
                 </div>
         </div>
     );
